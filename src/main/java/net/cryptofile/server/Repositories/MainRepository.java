@@ -35,6 +35,20 @@ public class MainRepository {
         }
     }
 
+    public void addFileToDb(byte[] file){
+        String query = "SET @generatedID = UUID_TO_BIN(UUID());" +
+                "INSERT INTO cryptofiles (file_info_idfile_info, cryptofile) VALUES (@generatedID, ?);" +
+                "INSERT INTO file_info (idfile_info, file_name, time_added, time_deletes) VALUES (@generatedID, @generatedID, NOW(), NOW() + INTERVAL 3 MONTH);" +
+                "INSERT INTO users_has_file_info (users_idusers, file_info_idfile_info) VALUES (?, @generatedID)";
+
+        try {
+            long userId = getCurrentUser().getId();
+            jdbcTemplate.update(query, file, userId);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
     private User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String loggedInUsername;
