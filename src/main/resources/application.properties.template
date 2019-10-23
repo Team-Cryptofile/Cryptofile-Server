@@ -1,0 +1,4 @@
+# Datasource config
+spring.datasource.url=jdbc:mysql://
+spring.datasource.username=
+spring.datasource.password=
