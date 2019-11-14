@@ -11,13 +11,16 @@ import java.util.UUID;
 public class Cryptofile {
 
     @Id
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "file_info_idfile_info",
-            updatable = false,
+    @Column(name = "file_info_idfile_info",
+            //updatable = false,
             columnDefinition = "BINARY(16)"
     )
     //@Type(type = "uuid-char")
     private UUID id;
+
+    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private FileInfo fileInfo;
 
     @Column(name = "cryptofile")
     private byte[] cryptofile;
@@ -36,5 +39,13 @@ public class Cryptofile {
 
     public void setCryptofile(byte[] cryptofile) {
         this.cryptofile = cryptofile;
+    }
+
+    public FileInfo getFileInfo() {
+        return fileInfo;
+    }
+
+    public void setFileInfo(FileInfo fileInfo) {
+        this.fileInfo = fileInfo;
     }
 }

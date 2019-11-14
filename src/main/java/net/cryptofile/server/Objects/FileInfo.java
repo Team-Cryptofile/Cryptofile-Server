@@ -1,5 +1,7 @@
 package net.cryptofile.server.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,8 +13,8 @@ import java.util.UUID;
 public class FileInfo {
 
     @Id
-    @JoinColumn(name = "idfile_info",
-            updatable = false,
+    @Column(name = "idfile_info",
+            //updatable = false,
             columnDefinition = "BINARY(16)")
     //@Type(type = "uuid-char")
     private UUID id;
@@ -20,10 +22,12 @@ public class FileInfo {
     @Column(name = "file_name")
     private String title;
 
+    @CreationTimestamp
     @Column(name = "time_added")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeAdded;
 
+    @CreationTimestamp
     @Column(name = "time_deletes")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeDeletes;

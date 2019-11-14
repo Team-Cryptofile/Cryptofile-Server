@@ -38,8 +38,8 @@ public class FileService {
         fileInfo.setId(uuid);
         fileInfo.setTitle(title);
 
+        cryptofile.setFileInfo(fileInfo);
         fileRepository.save(cryptofile);
-        fileInfoRepository.save(fileInfo);
 
         return uuid.toString();
     }
