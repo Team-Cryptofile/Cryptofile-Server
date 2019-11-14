@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @RestController
 public class MainRestController {
@@ -23,8 +25,8 @@ public class MainRestController {
     }
 
     @PostMapping(value = "/add")
-    public String addFile(@RequestParam("file") MultipartFile file,
-                          @RequestParam("title") String title) throws IOException {
+    public String addFile(@RequestParam("file") byte[] file,
+                          @RequestParam("title") String title) throws Exception {
         return mainRepository.addCryptofile(file, title);
     }
 
