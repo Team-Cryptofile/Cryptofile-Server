@@ -1,0 +1,8 @@
+2019-11-14 21:43:03,430 DEBUG org.hibernate.SQL [main] select cryptofile0_.id as id1_0_0_, cryptofile0_.cryptofile as cryptofi2_0_0_, cryptofile0_.file_info_id as file_inf3_0_0_ from cryptofiles cryptofile0_ where cryptofile0_.id=?
+2019-11-14 21:43:03,484 ERROR org.hibernate.engine.jdbc.spi.SqlExceptionHelper [main] Unknown column 'cryptofile0_.id' in 'field list'
+2019-11-14 21:43:20,128 INFO net.cryptofile.server.ServerApplicationTests [main] Starting ServerApplicationTests on DESKTOP-H1NNUH7 with PID 15712 (started by frode in C:\Users\frode\Projects\Cryptofile-Server)
+2019-11-14 21:43:20,130 DEBUG net.cryptofile.server.ServerApplicationTests [main] Running with Spring Boot v2.2.0.RELEASE, Spring v5.2.0.RELEASE
+2019-11-14 21:43:20,131 INFO net.cryptofile.server.ServerApplicationTests [main] No active profile set, falling back to default profiles: default
+2019-11-14 21:43:46,875 INFO net.cryptofile.server.ServerApplicationTests [main] Started ServerApplicationTests in 26.971 seconds (JVM running for 27.92)
+2019-11-14 21:43:47,036 DEBUG org.hibernate.SQL [main] select cryptofile0_.id as id1_0_0_, cryptofile0_.cryptofile as cryptofi2_0_0_, cryptofile0_.file_info_id as file_inf3_0_0_ from cryptofiles cryptofile0_ where cryptofile0_.id=?
+2019-11-14 21:43:47,087 ERROR org.hibernate.engine.jdbc.spi.SqlExceptionHelper [main] Unknown column 'cryptofile0_.id' in 'field list'
