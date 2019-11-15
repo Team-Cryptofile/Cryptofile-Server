@@ -5,17 +5,14 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
-
 @Entity
 @Table(name = "cryptofiles")
 public class Cryptofile {
 
     @Id
     @Column(name = "file_info_idfile_info",
-            //updatable = false,
             columnDefinition = "BINARY(16)"
     )
-    //@Type(type = "uuid-char")
     private UUID id;
 
     @PrimaryKeyJoinColumn

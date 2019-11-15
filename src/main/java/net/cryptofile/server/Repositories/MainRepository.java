@@ -16,14 +16,6 @@ public class MainRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public byte[] getCryptofile(String fileId){
-        String query = "SELECT cryptofile FROM cryptofiles WHERE file_info_idfile_info=?";
-        byte[] file;
-        file = jdbcTemplate.queryForObject(query, (rs, rowNum) -> rs.getBytes(1));
-
-        return file;
-    }
-
     /*
     private User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

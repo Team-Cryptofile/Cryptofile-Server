@@ -14,9 +14,7 @@ public class FileInfo {
 
     @Id
     @Column(name = "idfile_info",
-            //updatable = false,
             columnDefinition = "BINARY(16)")
-    //@Type(type = "uuid-char")
     private UUID id;
 
     @Column(name = "file_name")
