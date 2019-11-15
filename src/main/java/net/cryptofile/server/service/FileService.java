@@ -6,6 +6,10 @@ import net.cryptofile.server.Repositories.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -75,6 +79,8 @@ public class FileService {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setId(uuid);
         fileInfo.setTitle(title);
+        Date deleteDate = Date.from(LocalDateTime.now().plusMonths(1).atZone(ZoneId.systemDefault()).toInstant());
+        fileInfo.setTimeDeletes(deleteDate);
 
         // Combines file and file info
         cryptofile.setFileInfo(fileInfo);

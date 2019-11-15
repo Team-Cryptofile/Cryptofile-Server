@@ -25,7 +25,6 @@ public class FileInfo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeAdded;
 
-    @CreationTimestamp
     @Column(name = "time_deletes")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeDeletes;

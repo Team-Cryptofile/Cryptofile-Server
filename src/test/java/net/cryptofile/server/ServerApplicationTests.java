@@ -25,7 +25,7 @@ class ServerApplicationTests {
 		File testFile = new File("C:\\Users\\frode\\Projects\\Cryptofile-Server\\src\\test\\java\\net\\cryptofile\\server\\testFile.txt");
 		byte[] fileBytes = Files.readAllBytes(testFile.toPath());
 
-		String response = fileService.addCryptoFile(fileBytes, "Test title 1");
+		String response = fileService.addCryptofile(fileBytes, "Test title 1");
 		System.out.println("Response: " + response);
 	}
 }
