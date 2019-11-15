@@ -19,20 +19,39 @@ public class FileService {
     private FileRepository fileRepository;
 
     /**
-     * Gets file from the database by giving id as a UUID datatype.
-     * @param uuid id as UUID datatype.
-     * @return file.
+     * Gets file as object from the database by giving id as a UUID string.
+     * @param uuidString id as string.
+     * @return file as object.
      */
-    public byte[] getCryptoFile(UUID uuid){
+    public Cryptofile getCryptofileObject(String uuidString){
+        UUID uuid = UUID.fromString(uuidString);
+        return fileRepository.findById(uuid).get(0);
+    }
+
+    /**
+     * Gets file as object from the database by giving id as a UUID datatype.
+     * @param uuid id as UUID datatype.
+     * @return file as object.
+     */
+    public Cryptofile getCryptofileObject(UUID uuid){
+        return fileRepository.findById(uuid).get(0);
+    }
+
+    /**
+     * Gets file as bytes from the database by giving id as a UUID datatype.
+     * @param uuid id as UUID datatype.
+     * @return file as bytes.
+     */
+    public byte[] getCryptofileBytes(UUID uuid){
         return fileRepository.findById(uuid).get(0).getCryptofile();
     }
 
     /**
-     * Gets file from the database by giving id as a UUID string.
+     * Gets file as bytes from the database by giving id as a UUID string.
      * @param uuidString id as string.
-     * @return file.
+     * @return file as bytes.
      */
-    public byte[] getCryptoFile(String uuidString){
+    public byte[] getCryptofileBytes(String uuidString){
         UUID uuid = UUID.fromString(uuidString);
         return fileRepository.findById(uuid).get(0).getCryptofile();
     }
@@ -43,7 +62,7 @@ public class FileService {
      * @param title title of the file.
      * @return UUID as string.
      */
-    public String addCryptoFile(byte[] fileBytes, String title){
+    public String addCryptofile(byte[] fileBytes, String title){
         // Generate UUID
         UUID uuid = UUID.randomUUID();
 
