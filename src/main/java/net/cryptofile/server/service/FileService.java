@@ -92,4 +92,9 @@ public class FileService {
         return uuid.toString();
     }
 
+    public void deleteFile(String uuidString){
+        UUID uuid = UUID.fromString(uuidString);
+        fileRepository.delete(fileRepository.findById(uuid).get(0));
+    }
+
 }

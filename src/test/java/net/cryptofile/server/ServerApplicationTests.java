@@ -1,11 +1,13 @@
 package net.cryptofile.server;
 
+import net.cryptofile.server.Objects.Cryptofile;
 import net.cryptofile.server.Repositories.MainRepository;
 import net.cryptofile.server.RestControllers.MainRestController;
 import net.cryptofile.server.service.FileService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -16,9 +18,6 @@ class ServerApplicationTests {
 	@Autowired
 	FileService fileService;
 
-	@Test
-	void contextLoads() {
-	}
 
 	@Test
 	void testRestAddFile() throws Exception{
@@ -27,5 +26,15 @@ class ServerApplicationTests {
 
 		String response = fileService.addCryptofile(fileBytes, "Test title 1");
 		System.out.println("Response: " + response);
+
+		boolean match = response.matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
+		Assert.isTrue(match, "did not return UUID string");
+
+		Cryptofile fileObject = fileService.getCryptofileObject(response);
+		System.out.println("Title: " + fileObject.getFileInfo().getTitle() +
+				"\nID: " + fileObject.getFileInfo().getId() +
+				"\nTime added: " + fileObject.getFileInfo().getTimeAdded() +
+				"\nTime deletes: " + fileObject.getFileInfo().getTimeDeletes());
+		fileService.deleteFile(response);
 	}
 }
