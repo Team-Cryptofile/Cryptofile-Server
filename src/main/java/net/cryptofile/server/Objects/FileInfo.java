@@ -32,6 +32,9 @@ public class FileInfo {
     @ManyToMany(mappedBy = "fileInfos")
     private Set<User> users = new HashSet<>();
 
+    @Column(name = "file_type")
+    private String type;
+
     @JoinColumn(name = "file_owner")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User owner;
