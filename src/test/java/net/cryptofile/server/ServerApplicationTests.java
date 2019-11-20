@@ -1,8 +1,6 @@
 package net.cryptofile.server;
 
 import net.cryptofile.server.Objects.Cryptofile;
-import net.cryptofile.server.Repositories.MainRepository;
-import net.cryptofile.server.RestControllers.MainRestController;
 import net.cryptofile.server.service.FileService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +29,10 @@ class ServerApplicationTests {
 		Assert.isTrue(match, "did not return UUID string");
 
 		Cryptofile fileObject = fileService.getCryptofileObject(response);
-		System.out.println("Title: " + fileObject.getFileInfo().getTitle() +
-				"\nID: " + fileObject.getFileInfo().getId() +
-				"\nTime added: " + fileObject.getFileInfo().getTimeAdded() +
-				"\nTime deletes: " + fileObject.getFileInfo().getTimeDeletes());
+		System.out.println("Title: " + fileObject.getTitle() +
+				"\nID: " + fileObject.getId() +
+				"\nTime added: " + fileObject.getTimeAdded() +
+				"\nTime deletes: " + fileObject.getTimeDeletes());
 		fileService.deleteFile(response);
 	}
 }

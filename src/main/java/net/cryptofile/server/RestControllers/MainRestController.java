@@ -27,9 +27,6 @@ public class MainRestController {
     @PostMapping(value = "/add")
     public String addFile(@RequestParam("file") byte[] file,
                           @RequestParam("title") String title) throws IOException {
-        //return mainRepository.addCryptofile(file, title);
-        return fileService.addCryptoFile(file, title);
-                          @RequestParam("title") String title) {
         return fileService.addCryptofile(file, title);
     }
 
@@ -41,8 +38,6 @@ public class MainRestController {
     @GetMapping(value = "/get/{fileId:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}}")
     @ResponseBody
     public ResponseEntity<ByteArrayResource> serveFile(@PathVariable String fileId) throws IOException {
-        ByteArrayResource file = new ByteArrayResource(fileService.getCryptoFile(fileId));
-    public ResponseEntity<ByteArrayResource> getFile(@PathVariable String fileId) {
         ByteArrayResource file = new ByteArrayResource(fileService.getCryptofileBytes(fileId));
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; fileId=\"" + fileId + "\"").body(file);
@@ -55,6 +50,6 @@ public class MainRestController {
      */
     @GetMapping(value = "/get/title/{fileId:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}}")
     public String getFileTitle(@PathVariable String fileId) {
-        return fileService.getCryptofileObject(fileId).getFileInfo().getTitle();
+        return fileService.getCryptofileObject(fileId).getTitle();
     }
 }

@@ -1,7 +1,6 @@
 package net.cryptofile.server.service;
 
 import net.cryptofile.server.Objects.Cryptofile;
-import net.cryptofile.server.Objects.FileInfo;
 import net.cryptofile.server.Repositories.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -29,12 +27,11 @@ public class FileService {
 
     private String fileDestination = System.getProperty("user.home") +"/cryptofiles/";
 
-    public byte[] getCryptoFile(UUID uuid) throws IOException {
-        return getFile(uuid.toString());
+        
     /**
-     * Gets file as object from the database by giving id as a UUID string.
+     * Gets file as object from the filesystem by giving id as a UUID string.
      * @param uuidString id as string.
-     * @return file as object.
+     * @return file info object.
      */
     public Cryptofile getCryptofileObject(String uuidString){
         UUID uuid = UUID.fromString(uuidString);
@@ -42,64 +39,58 @@ public class FileService {
     }
 
     /**
-     * Gets file as object from the database by giving id as a UUID datatype.
+     * Gets file as object from the filesystem by giving id as a UUID datatype.
      * @param uuid id as UUID datatype.
-     * @return file as object.
+     * @return file info object.
      */
     public Cryptofile getCryptofileObject(UUID uuid){
         return fileRepository.findById(uuid).get(0);
     }
 
     /**
-     * Gets file as bytes from the database by giving id as a UUID datatype.
+     * Gets file as bytes from the filesystem by giving id as a UUID datatype.
      * @param uuid id as UUID datatype.
      * @return file as bytes.
      */
-    public byte[] getCryptofileBytes(UUID uuid){
-        return fileRepository.findById(uuid).get(0).getCryptofile();
+    public byte[] getCryptofileBytes(UUID uuid) throws IOException {
+        return getFile(uuid.toString());
     }
 
-    public byte[] getCryptoFile(String uuidString) throws IOException {
-        return getFile(uuidString);
+    //public byte[] getCryptoFile(String uuidString) throws IOException {
+     //   return getFile(uuidString);
     /**
-     * Gets file as bytes from the database by giving id as a UUID string.
+     * Gets file as bytes from the filesystem by giving id as a UUID string.
      * @param uuidString id as string.
      * @return file as bytes.
      */
-    public byte[] getCryptofileBytes(String uuidString){
+    public byte[] getCryptofileBytes(String uuidString) throws IOException {
         UUID uuid = UUID.fromString(uuidString);
-        return fileRepository.findById(uuid).get(0).getCryptofile();
+        return getFile(uuidString);
     }
 
-    public String addCryptoFile(byte[] fileBytes, String title) throws IOException {
+    //public String addCryptoFile(byte[] fileBytes, String title) throws IOException {
     /**
-     * Adds a file to the database and returns an UUID string.
+     * Adds a file to the filesystem and returns an UUID string.
      * @param fileBytes file as a byte array.
      * @param title title of the file.
      * @return UUID as string.
      */
-    public String addCryptofile(byte[] fileBytes, String title){
+    public String addCryptofile(byte[] fileBytes, String title) throws IOException {
         // Generate UUID
         UUID uuid = UUID.randomUUID();
-
-        storeFile(fileBytes, uuid.toString());
 
         // Create and build file object
         Cryptofile cryptofile = new Cryptofile();
         cryptofile.setId(uuid);
         cryptofile.setTitle(title);
-
-        // Create and build file info
-        FileInfo fileInfo = new FileInfo();
-        fileInfo.setId(uuid);
-        fileInfo.setTitle(title);
+        cryptofile.setTitle(title);
         Date deleteDate = Date.from(LocalDateTime.now().plusMonths(1).atZone(ZoneId.systemDefault()).toInstant());
-        fileInfo.setTimeDeletes(deleteDate);
+        cryptofile.setTimeDeletes(deleteDate);
 
-        // Combines file and file info
-        cryptofile.setFileInfo(fileInfo);
+        // Stores file in filesystem
+        storeFile(fileBytes, uuid.toString());
 
-        // Stores the file in database
+        // Stores the file in filesystem
         fileRepository.save(cryptofile);
 
         // Returns id as string
@@ -120,7 +111,14 @@ public class FileService {
 
     public void deleteFile(String uuidString){
         UUID uuid = UUID.fromString(uuidString);
-        fileRepository.delete(fileRepository.findById(uuid).get(0));
+        File file = new File(fileDestination + uuid);
+        if (file.delete()) {
+            fileRepository.delete(fileRepository.findById(uuid).get(0));
+            System.out.println(uuid + " was successfully deleted");
+        } else {
+            System.out.println("File failed to be deleted");
+        }
+
     }
 
 }
