@@ -28,7 +28,8 @@ public class User {
             joinColumns = {@JoinColumn(name = "users_idusers")},
             inverseJoinColumns = {@JoinColumn(name = "file_info_idfile_info")}
     )
-    private Set<FileInfo> fileInfos = new HashSet<>();
+
+    private Set<Cryptofile> fileInfos = new HashSet<>();
 
     public User(String username, String password) {
         this.username = username;
@@ -59,11 +60,13 @@ public class User {
         this.password = password;
     }
 
-    public Set<FileInfo> getFileInfos() {
+    public Set<Cryptofile> getFileInfos() {
         return fileInfos;
     }
 
-    public void setFileInfos(Set<FileInfo> fileInfos) {
+    public void setFileInfos(Set<Cryptofile> fileInfos) {
         this.fileInfos = fileInfos;
     }
+
+
 }

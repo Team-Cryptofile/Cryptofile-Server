@@ -1,3 +1,4 @@
+
 create table users
 (
     idusers int auto_increment,
@@ -12,9 +13,9 @@ create table users
 alter table users
     add primary key (idusers);
 
-create table file_info
+create table cryptofiles
 (
-    idfile_info binary(16) not null
+    file_id binary(16) not null
         primary key,
     file_name varchar(45) null,
     time_added datetime not null,
@@ -25,22 +26,13 @@ create table file_info
         foreign key (file_owner) references users (idusers)
 );
 
-create table cryptofiles
-(
-    file_info_idfile_info binary(16) not null
-        primary key,
-    cryptofile longblob not null,
-    constraint fk_cryptofiles_file_info
-        foreign key (file_info_idfile_info) references file_info (idfile_info)
-);
-
 create table users_has_file_info
 (
     users_idusers int not null,
     file_info_idfile_info binary(16) not null,
     primary key (users_idusers, file_info_idfile_info),
     constraint fk_users_has_file_info_file_info1
-        foreign key (file_info_idfile_info) references file_info (idfile_info),
+        foreign key (file_info_idfile_info) references cryptofiles (file_id),
     constraint fk_users_has_file_info_users1
         foreign key (users_idusers) references users (idusers)
 );
