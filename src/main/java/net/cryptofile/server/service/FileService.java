@@ -4,11 +4,13 @@ import net.cryptofile.server.Objects.Cryptofile;
 import net.cryptofile.server.Repositories.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -25,7 +27,7 @@ public class FileService {
     @Autowired
     private FileRepository fileRepository;
 
-    private String fileDestination = System.getProperty("user.home") +"/cryptofiles/";
+    private String fileDestination = System.getProperty("user.home") + "/cryptofiles/";
 
         
     /**
@@ -75,7 +77,7 @@ public class FileService {
      * @param title title of the file.
      * @return UUID as string.
      */
-    public String addCryptofile(byte[] fileBytes, String title) throws IOException {
+    public String addCryptofile(MultipartFile fileBytes, String title) throws IOException {
         // Generate UUID
         UUID uuid = UUID.randomUUID();
 
@@ -97,11 +99,8 @@ public class FileService {
         return uuid.toString();
     }
 
-    private void storeFile(byte[] file, String uuid) throws IOException {
-
-        FileOutputStream fos = new FileOutputStream(fileDestination + uuid);
-        fos.write(file);
-        fos.close();
+    private void storeFile(MultipartFile file, String uuid) throws IOException {
+        Files.copy(file.getInputStream(), Paths.get(fileDestination + uuid), StandardCopyOption.REPLACE_EXISTING);
     }
 
     private byte[] getFile(String uuid) throws IOException {
