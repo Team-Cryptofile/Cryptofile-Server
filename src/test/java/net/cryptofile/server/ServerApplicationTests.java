@@ -55,6 +55,7 @@ class ServerApplicationTests {
 		HttpURLConnection c = null;
 		File testFile = new File("C:\\Users\\frode\\Projects\\Cryptofile-Server\\src\\test\\java\\net\\cryptofile\\server\\testFile.txt");
 		String title = "Testfile";
+		String filetype = "txt";
 		try {
 			URL url = new URL("http://localhost:" + port + "/add");
 			String boundary = UUID.randomUUID().toString();
@@ -99,6 +100,12 @@ class ServerApplicationTests {
 			request.writeBytes( "\r\n");
 			System.out.println("Sent file");
 
+			// Filetype
+			request.writeBytes("------WebKitFormBoundary" + boundary + "\r\n");
+			request.writeBytes("Content-Disposition: form-data; name=\"filetype\"\r\n");
+			request.writeBytes("Content-Type: text/plain\r\n\r\n");
+			request.writeBytes(filetype + "\r\n");
+
 			request.writeBytes("------WebKitFormBoundary" + boundary + "--\r\n");
 			request.flush();
 
@@ -113,7 +120,8 @@ class ServerApplicationTests {
 				System.out.println("Title: " + fileObject.getTitle() +
 						"\nID: " + fileObject.getId() +
 						"\nTime added: " + fileObject.getTimeAdded() +
-						"\nTime deletes: " + fileObject.getTimeDeletes());
+						"\nTime deletes: " + fileObject.getTimeDeletes() +
+						"\nFiletype: " + fileObject.getFiletype());
 
 				String testFileString = new String(Files.readAllBytes(Paths.get(testFile.getPath())), StandardCharsets.UTF_8);
 				String uploadedFileString = new String(Files.readAllBytes(Paths.get(fileDestination + response)), StandardCharsets.UTF_8);

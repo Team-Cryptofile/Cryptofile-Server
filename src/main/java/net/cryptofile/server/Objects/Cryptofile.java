@@ -31,6 +31,9 @@ public class Cryptofile {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeDeletes;
 
+    @Column(name = "file_type")
+    private String filetype;
+
     @ManyToMany(mappedBy = "fileInfos")
     private Set<User> users = new HashSet<>();
 
@@ -70,6 +73,14 @@ public class Cryptofile {
 
     public void setTimeDeletes(Date timeDeletes) {
         this.timeDeletes = timeDeletes;
+    }
+
+    public void setFiletype(String filetype) {
+        this.filetype = filetype;
+    }
+
+    public String getFiletype() {
+        return filetype;
     }
 
     public Set<User> getUsers() {

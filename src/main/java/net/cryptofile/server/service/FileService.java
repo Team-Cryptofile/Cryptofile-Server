@@ -77,7 +77,7 @@ public class FileService {
      * @param title title of the file.
      * @return UUID as string.
      */
-    public String addCryptofile(MultipartFile fileBytes, String title) throws IOException {
+    public String addCryptofile(MultipartFile fileBytes, String title, String filetype) throws IOException {
         // Generate UUID
         UUID uuid = UUID.randomUUID();
 
@@ -85,7 +85,7 @@ public class FileService {
         Cryptofile cryptofile = new Cryptofile();
         cryptofile.setId(uuid);
         cryptofile.setTitle(title);
-        cryptofile.setTitle(title);
+        cryptofile.setFiletype(filetype);
         Date deleteDate = Date.from(LocalDateTime.now().plusMonths(1).atZone(ZoneId.systemDefault()).toInstant());
         cryptofile.setTimeDeletes(deleteDate);
 
